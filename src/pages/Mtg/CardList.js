@@ -17,6 +17,10 @@ class CardList extends Component {
 			);
 	}
 	
+	componentWillReceiveProps(nextProps){
+		this.setState({cards: nextProps.cards})
+	}
+	
 	render() {
 		return (
 			<div>

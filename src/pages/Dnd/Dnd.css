@@ -1,0 +1,5 @@
+.droppable{
+    min-height: 10em;
+    min-width: 10em;
+    background-color: #f1f1f1;
+}

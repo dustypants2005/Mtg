@@ -23,7 +23,11 @@ class Card extends Component {
 	
 	CloseModal(e){
 		// e.target.style.display = "none";
-		Array.from(document.getElementsByClassName("modal")).forEach(function(i) { i.style.display = "none"});
+		Array.from(document.getElementsByClassName("modal")).forEach((i) => { i.style.display = "none"});
+	}
+	
+	componentWillReceiveProps(nextProps){
+		this.setState({card: nextProps.card})
 	}
 	
 	render() {
