@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CardList from "./CardList";
 import {SearchCards} from "./SearchApi";
 import Rx from 'rxjs/Rx';
+import Pager from "./Pager";
 
 class Search extends Component {
 	constructor(props){
@@ -10,35 +11,11 @@ class Search extends Component {
 			name: this.props.name,
 			cards: [],
 			error: {},
-			cardList: {}
+			page: 1,
+			pageSize: 50
 		};
-		
-		
 	}
 	
-	OnSearchHandler(e){
-		e.preventDefault();
-		this.setState({name: e.target.value});
-		SearchCards(this.state.name, this.SetCards.bind(this));
-	}
-	
-	
-	OnChangeHandler(e){
-		e.preventDefault();
-		let target = e.target;
-		
-		let name = target.name;
-		let value = target.value;
-		
-		this.setState( {[name]: value} );
-	}
-	GetCards(e){
-		e.preventDefault();
-		// search with api
-		// save results to state "cards"
-	
-		SearchCards(this.state.name, this.SetCards.bind(this));
-	}
 	SetCards(error, cards){
 		if(error){
 			console.log(error);
@@ -46,17 +23,45 @@ class Search extends Component {
 		}
 		this.setState({cards});
 	}
-	Clear(e){
-		this.setState({name: ""});
+	
+	onNextHandler(e){
+		e.preventDefault();
+		
+		let page = this.state.page;
+		
+		if( this.state.cards.length >= this.state.pageSize)
+			page++;
+		
+		SearchCards({
+			name: this.state.name,
+			page,
+			pageSize: this.state.pageSize
+		}, this.SetCards.bind(this));
+		
+		this.setState({page})
+	}
+	
+	onPreviousHandler(e){
+		e.preventDefault();
+		let page = this.state.page;
+		
+		if(page >= 1)
+			page--;
+		
+		SearchCards({
+			name: this.state.name,
+			page,
+			pageSize: this.state.pageSize
+		}, this.SetCards.bind(this));
+		
+		this.setState({page})
 	}
 	
 	shouldComponentUpdate(nextProps, nextState) {
 		if (this.state.cards !== nextState.cards) {
-			console.log('Search State Cards Changed');
 			return true;
 		}
 		if (this.props.cards !== nextProps.cards) {
-			console.log('Search Props Cards Changed');
 			return true;
 		}
 		return false;
@@ -72,14 +77,18 @@ class Search extends Component {
 			.debounceTime(500)
 			.subscribe({
 				next: (value) =>{
-					console.log(value);
-					SearchCards(value, this.SetCards.bind(this));
+					this.setState({name: value, page: 1});
+					SearchCards({
+						name: value,
+						page: 1,
+						pageSize: this.state.pageSize
+					}, this.SetCards.bind(this));
 				}
 			});
 	}
 	
 	componentWillUnmount(){
-		this.search.unsubscribe();
+	
 	}
 	
 	render() {
@@ -92,29 +101,14 @@ class Search extends Component {
 					       placeholder="Search Card Name"
 					       type="text"
 					       name="name"
-					       id="name"
-					       value={this.state.name}/>
+					       id="name"/>
 					</div>
 				<br/><br/>
+				<Pager next={this.onNextHandler.bind(this)} previous={this.onPreviousHandler.bind(this)} />
 				<CardList cards={this.state.cards}/>
 			</div>
 		);
 	}
-	// render() {
-	// 	return (
-	// 	<div>
-	// 		{this.props.children}
-	// 		<form>
-	// 			<label>Search Card Name : </label> <input type="text" name="name" onChange={this.OnChangeHandler.bind(this)} value={this.state.name}/>
-	// 			<br/><br/>
-	// 			<button onClick={this.GetCards.bind(this)}><span className="glyphicon glyphicon-search"/> Search</button>
-	// 			<button onClick={this.Clear.bind(this)}><span className="glyphicon glyphicon-refresh"/> Reset</button>
-	// 		</form>
-	// 		<br/><br/>
-	// 		<CardList cards={this.state.cards}/>
-	// 	</div>
-	// 	);
-	// }
 }
 
 export default Search;

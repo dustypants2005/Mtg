@@ -3951,6 +3951,16 @@ micromatch@^2.1.5, micromatch@^2.3.11:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
+midievents@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/midievents/-/midievents-1.0.1.tgz#f7c8ba7efb657f2c3bc80c2cbd19117234d2cc52"
+
+midiplayer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/midiplayer/-/midiplayer-1.0.0.tgz#62c17f5e453c940eee8b5eb8c8849fbfa0bca076"
+  dependencies:
+    midievents "^1.0.1"
+
 miller-rabin@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.0.tgz#4a62fb1d42933c05583982f4c716f6fb9e6c6d3d"

@@ -2,19 +2,19 @@ import axios from "axios"
 
 const url = "https://api.magicthegathering.io/v1/cards";
 
-export function SearchCards(name, cb) {
+export function SearchCards(p, cb) {
 	return (async ()=> {
 		axios.get(url, {
 				params: {
-					name
+					name: p.name,
+					page: p.page,
+					pageSize: p.pageSize
 				}
 			})
 			.then((response) =>{
-				console.log("Response Data : ", response.data.cards);
 				cb(null, response.data.cards);
 			})
 			.catch((error) => {
-				console.log("Error : ", error);
 				cb(error, null);
 			});
 	})();

@@ -7,6 +7,7 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
+    "midiplayer": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-drag-and-drop": "^2.4.0",
