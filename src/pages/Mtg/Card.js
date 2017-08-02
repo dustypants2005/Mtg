@@ -11,21 +11,14 @@ class Card extends Component {
 	}
 	
 	LoadModal(e){
-		// let modal = document.getElementById("modal");
 		const modal = e.target.nextElementSibling;
-		// let imgModal = document.getElementById("imgModal");
-		// let caption = document.getElementById("caption");
 		const imgModal = e.target.nextElementSibling.lastElementChild.firstElementChild;
-		
 		modal.style.display = "block";
 		imgModal.src = this.state.card.imageUrl;
 	}
 	
 	CloseModal(e){
-		// e.target.style.display = "none";
 		e.target.parentElement.style.display = "none";
-		
-		// Array.from(document.getElementsByClassName("modal")).forEach((i) => { i.style.display = "none"});
 	}
 	
 	componentWillReceiveProps(nextProps){
@@ -44,12 +37,12 @@ class Card extends Component {
 	render() {
 		return (
 			<div className="imgBox">
-				<img id="img" src={this.state.card.imageUrl} alt={this.state.card.name}
+				<img id="img" src={this.state.card.imageUrl} alt={this.state.card.name || ""}
 				     onClick={this.LoadModal.bind(this)} className="img"/>
 				<div id="modal" className="modal container" >
 					<span className="close" onClick={this.CloseModal.bind(this)} >&times;</span>
 					<div className="container">
-						<img className="modal-content" id="imgModal"/>
+						<img className="modal-content" id="imgModal" alt="imgModal"/>
 						<div id="caption" className="caption">{this.GetDetails(this.state.card)}</div>
 					</div>
 				</div>
